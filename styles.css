@@ -1,0 +1,109 @@
+/* Epic Adcraft — Bespoke Creative Agency Design System */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+:root {
+    --primary: #8b5cf6;
+    --primary-dark: #6d28d9;
+    --accent: #c4b5fd;
+    --bg-dark: #08070c;
+    --bg-surface: #100f18;
+    --bg-card: #151420;
+    --border-color: rgba(255, 255, 255, 0.08);
+    --border-hover: rgba(139, 92, 246, 0.4);
+}
+
+* {
+    font-family: 'Poppins', sans-serif !important;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: #f3f3f6;
+    overflow-x: hidden;
+}
+
+/* Custom Minimal Studio Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #08070c;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #23212d;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #8b5cf6;
+}
+
+/* Seamless Marquee Animation */
+@keyframes marquee {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+    display: flex;
+    width: 200%;
+    animation: marquee 28s linear infinite;
+}
+
+.animate-marquee:hover {
+    animation-play-state: paused;
+}
+
+/* Ambient Radial Glow */
+.ambient-glow {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(120px);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Smooth Focus States */
+input:focus, textarea:focus, select:focus {
+    outline: none !important;
+    border-color: #8b5cf6 !important;
+    box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.25) !important;
+}
+
+/* Card Depth and Hover Physics */
+.agency-card-hover {
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.agency-card-hover:hover {
+    transform: translateY(-4px);
+    border-color: rgba(139, 92, 246, 0.45);
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 30px -10px rgba(139, 92, 246, 0.15);
+}
+
+/* Badge Pulse */
+@keyframes pulseGlow {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.9); }
+}
+
+.pulse-dot {
+    animation: pulseGlow 2s infinite ease-in-out;
+}
+
+/* 3D Perspective & Hero Canvas Utilities */
+.perspective-1000 {
+    perspective: 1000px;
+}
+
+.preserve-3d {
+    transform-style: preserve-3d;
+}
+
+.hero-3d-card {
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+    transform-style: preserve-3d;
+    will-change: transform;
+}

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article — Epic Adcraft Studio</title>
+    <!-- Google Font: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        display: ['Poppins', 'sans-serif'],
+                        serif: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        studio: {
+                            base: '#08070c',
+                            panel: '#0f0e17',
+                            card: '#141320',
+                            border: 'rgba(255, 255, 255, 0.08)',
+                            muted: '#9a98a8',
+                            purple: '#8b5cf6',
+                            deepPurple: '#6d28d9',
+                            accent: '#c4b5fd',
+                            sand: '#f5f4f8'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-studio-base text-studio-sand font-sans antialiased selection:bg-studio-purple selection:text-white">
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-studio-base/80 border-b border-studio-border">
+        <div class="max-w-5xl mx-auto px-6 h-24 sm:h-28 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-4 group py-2">
+                <img src="logo.png" alt="Epic Adcraft" class="h-16 sm:h-20 w-auto object-contain transition-transform duration-300 group-hover:scale-105">
+                <span class="hidden sm:inline-block text-[11px] uppercase tracking-widest text-studio-muted pl-3 border-l border-studio-border font-medium">Journal</span>
+            </a>
+
+            <div class="flex items-center gap-6">
+                <a href="blog.html" class="text-xs uppercase tracking-widest text-studio-muted hover:text-white transition-colors flex items-center gap-2">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                    <span>All Articles</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Article Content -->
+    <main class="pt-40 pb-28 min-h-screen">
+        <article class="max-w-3xl mx-auto px-6">
+            <!-- Article Header -->
+            <div class="space-y-6 mb-12">
+                <div class="flex items-center gap-3">
+                    <span id="articleCategory" class="text-xs uppercase tracking-widest text-studio-accent font-semibold px-3 py-1 rounded-full bg-studio-purple/10 border border-studio-purple/20">Category</span>
+                    <span class="text-studio-muted text-xs">•</span>
+                    <span id="articleDate" class="text-xs uppercase tracking-widest text-studio-muted">Date</span>
+                    <span class="text-studio-muted text-xs">•</span>
+                    <span id="articleReadTime" class="text-xs uppercase tracking-widest text-studio-muted">Read Time</span>
+                </div>
+
+                <h1 id="articleTitle" class="font-serif text-4xl sm:text-6xl text-white font-normal leading-[1.15]">
+                    Loading Article...
+                </h1>
+
+                <!-- Author Profile Card -->
+                <div class="pt-6 border-t border-studio-border flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-studio-purple to-studio-deepPurple flex items-center justify-center font-bold text-white text-sm">
+                            EA
+                        </div>
+                        <div>
+                            <div id="articleAuthor" class="text-sm font-semibold text-white">Elbinmon Edavazhickal</div>
+                            <div id="articleAuthorRole" class="text-xs text-studio-muted">Founder & CEO, Epic Adcraft</div>
+                        </div>
+                    </div>
+
+                    <a href="index.html#contact" class="hidden sm:inline-flex px-4 py-2 rounded-full border border-studio-border text-xs uppercase tracking-wider text-studio-sand hover:text-white hover:border-studio-purple transition-all">
+                        Work with Us
+                    </a>
+                </div>
+            </div>
+
+            <!-- Featured Image (If Uploaded) -->
+            <div id="articleImageWrapper" class="hidden w-full h-72 sm:h-96 rounded-3xl overflow-hidden mb-10 border border-studio-border">
+                <img id="articleImage" src="" alt="Featured Image" class="w-full h-full object-cover">
+            </div>
+
+            <!-- Article Body -->
+            <div id="articleBody" class="space-y-6 text-studio-sand/90 font-light text-lg sm:text-xl leading-relaxed border-t border-studio-border pt-10">
+                <!-- Injected via blogs.js -->
+            </div>
+
+            <!-- Article Footer CTA -->
+            <div class="mt-20 p-8 sm:p-12 rounded-3xl bg-studio-panel border border-studio-border text-center space-y-6">
+                <span class="text-xs uppercase tracking-widest text-studio-accent font-semibold">Epic Adcraft Studio</span>
+                <h3 class="font-serif text-3xl sm:text-4xl text-white font-normal">Ready to transform your brand’s trajectory?</h3>
+                <p class="text-studio-muted text-sm max-w-lg mx-auto font-light">
+                    We craft tailored brand identities, high-conversion websites, and calculated digital ad campaigns.
+                </p>
+                <div>
+                    <a href="index.html#contact" class="inline-flex px-8 py-3.5 rounded-full bg-white text-studio-base font-semibold text-xs uppercase tracking-wider hover:bg-studio-accent transition-colors">
+                        Start a Project with Us
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-studio-border bg-studio-base text-studio-muted text-xs">
+        <div class="max-w-5xl mx-auto px-6 flex items-center justify-between">
+            <span class="text-white font-serif tracking-wider">EPIC ADCRAFT</span>
+            <span>© 2026. Kochi, Kerala.</span>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="blogs.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.lucide) lucide.createIcons();
+
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id') || "1";
+            const article = getArticleById(id);
+
+            if (!article) {
+                document.getElementById('articleTitle').textContent = "Article Not Found";
+                document.getElementById('articleBody').innerHTML = "<p>The requested essay could not be found. <a href='blog.html' class='text-studio-purple underline'>View all articles</a>.</p>";
+                return;
+            }
+
+            document.title = `${article.title} — Epic Adcraft Journal`;
+            document.getElementById('articleCategory').textContent = article.category;
+            document.getElementById('articleDate').textContent = article.date;
+            document.getElementById('articleReadTime').textContent = article.readTime;
+            document.getElementById('articleAuthor').textContent = article.author;
+            document.getElementById('articleAuthorRole').textContent = article.authorRole || "Creative Studio";
+            document.getElementById('articleTitle').textContent = article.title;
+            document.getElementById('articleBody').innerHTML = article.content;
+
+            if (article.image) {
+                const imgEl = document.getElementById('articleImage');
+                const imgWrap = document.getElementById('articleImageWrapper');
+                if (imgEl && imgWrap) {
+                    imgEl.src = article.image;
+                    imgWrap.classList.remove('hidden');
+                }
+            }
+        });
+    </script>
+</body>
+</html>

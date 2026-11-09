@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Epic Adcraft — Strategic Creative Solutions | Kochi, Kerala</title>
+    <meta name="description" content="Epic Adcraft is an independent branding, web design, and performance marketing agency based in Kochi, Kerala. We create category-defining brands and high-conversion digital experiences.">
+    <!-- Google Font: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        display: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        studio: {
+                            bg: '#08070c',
+                            surface: '#0f0e17',
+                            card: '#141320',
+                            cardHover: '#1a192b',
+                            border: 'rgba(255, 255, 255, 0.08)',
+                            primary: '#8b5cf6',
+                            primaryDark: '#6d28d9',
+                            accent: '#c4b5fd',
+                            muted: '#9a98a8',
+                            light: '#f5f4f8'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-studio-bg text-studio-light font-sans antialiased selection:bg-studio-primary selection:text-white overflow-x-hidden relative">
+
+    <!-- Ambient Glow Blobs (Subtle Agency Depth) -->
+    <div class="ambient-glow w-[500px] h-[500px] bg-purple-900/15 top-0 left-1/4"></div>
+    <div class="ambient-glow w-[600px] h-[600px] bg-indigo-950/20 top-96 right-0"></div>
+
+    <!-- Header Navigation (Luxury Agency Dock) -->
+    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-xl bg-studio-bg/90 border-b border-studio-border" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 sm:px-10 h-24 sm:h-28 flex items-center justify-between">
+            <!-- Official Brand Logo -->
+            <a href="#hero" class="flex items-center group py-2">
+                <img src="logo.png" alt="Epic Adcraft - Strategic Creative Solutions" class="h-11 sm:h-12 md:h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-105">
+            </a>
+
+            <!-- Desktop Navigation Links -->
+            <nav class="hidden lg:flex items-center gap-8 text-xs uppercase tracking-widest text-studio-muted font-medium">
+                <a href="#services" class="hover:text-white transition-colors">Services</a>
+                <a href="#process" class="hover:text-white transition-colors">Process</a>
+                <a href="#work" class="hover:text-white transition-colors">Work</a>
+                <a href="#about" class="hover:text-white transition-colors">About Us</a>
+                <a href="#journal" class="hover:text-white transition-colors">Journal</a>
+                <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+            </nav>
+
+            <!-- Actions -->
+            <div class="hidden sm:flex items-center gap-4">
+                <a href="https://wa.me/919999999999?text=Hello%20Epic%20Adcraft%20Team" target="_blank" class="p-3 rounded-full border border-studio-border text-studio-muted hover:text-emerald-400 hover:border-emerald-500/40 hover:bg-emerald-500/10 transition-all" title="Direct WhatsApp Desk">
+                    <i data-lucide="message-circle" class="w-4 h-4"></i>
+                </a>
+                <a href="#contact" class="px-6 py-3 rounded-full text-xs uppercase tracking-widest font-bold bg-white text-studio-bg hover:bg-studio-accent hover:text-studio-bg transition-all duration-300 shadow-lg shadow-purple-900/10">
+                    Let's Talk
+                </a>
+            </div>
+
+            <!-- Mobile Hamburger Button -->
+            <button id="mobileMenuBtn" class="lg:hidden p-2 text-studio-muted hover:text-white focus:outline-none" aria-label="Toggle Menu">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Drawer -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-studio-surface border-b border-studio-border px-8 py-8 space-y-5 text-sm uppercase tracking-widest font-semibold">
+            <a href="#services" class="block text-studio-muted hover:text-white py-1">Services</a>
+            <a href="#process" class="block text-studio-muted hover:text-white py-1">Our Process</a>
+            <a href="#work" class="block text-studio-muted hover:text-white py-1">Selected Work</a>
+            <a href="#about" class="block text-studio-muted hover:text-white py-1">About Us</a>
+            <a href="#journal" class="block text-studio-muted hover:text-white py-1">Journal</a>
+            <a href="#contact" class="block text-studio-primary py-1 font-bold">Start a Project →</a>
+            <div class="pt-4 border-t border-studio-border">
+                <a href="blog.html" class="text-xs text-studio-muted hover:text-white">Read All Articles →</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section (Bespoke High-End Agency Entrance) -->
+    <section id="hero" class="relative pt-44 pb-20 sm:pt-52 sm:pb-32 z-10">
+        <div class="max-w-7xl mx-auto px-6 sm:px-10">
+            
+            <!-- Live Availability Pill -->
+            <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-studio-surface border border-studio-border text-xs uppercase tracking-widest text-studio-light font-medium mb-8">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 pulse-dot"></span>
+                <span>Available for Q1/Q2 Selected Brand Partnerships • Kochi, Kerala</span>
+            </div>
+
+            <!-- Big Impact Split Layout with 3D Creative Stage -->
+            <div class="grid lg:grid-cols-12 gap-12 lg:gap-14 items-center">
+                <div class="lg:col-span-7 space-y-6">
+                    <h1 class="font-display text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white leading-[1.08] tracking-tight">
+                        We Craft <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-studio-accent to-white">Category-Defining</span> Brands & Digital Engines.
+                    </h1>
+
+                    <p class="text-base sm:text-xl text-studio-muted max-w-2xl font-light leading-relaxed pt-2">
+                        Epic Adcraft is an independent creative and digital marketing agency based in Kochi. We turn ambitious founders and modern enterprises into unmistakable category leaders through bold identity, bespoke web engineering, and performance media.
+                    </p>
+
+                    <!-- Hero Action Buttons -->
+                    <div class="pt-6 flex flex-wrap items-center gap-5">
+                        <a href="#contact" class="px-8 py-4 rounded-full bg-studio-primary text-white font-bold text-xs uppercase tracking-widest hover:bg-studio-primaryDark hover:shadow-xl hover:shadow-purple-900/40 transition-all duration-300 flex items-center gap-2 group shadow-lg shadow-purple-900/20">
+                            <span>Start Your Project</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                        <a href="#work" class="px-8 py-4 rounded-full border border-studio-border text-white font-medium text-xs uppercase tracking-widest hover:border-studio-primary hover:bg-studio-surface transition-all duration-300">
+                            <span>Explore Case Studies</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 3D Creative Visual Banner Stage (Replacing Static Metric Box) -->
+                <div class="lg:col-span-5 perspective-1000">
+                    <div id="hero3DStage" class="relative w-full h-[450px] sm:h-[490px] rounded-3xl bg-gradient-to-b from-[#11101c] via-[#0d0c15] to-[#07060b] border border-studio-border overflow-hidden shadow-2xl flex items-center justify-center hero-3d-card group cursor-pointer" onclick="document.getElementById('work').scrollIntoView({behavior: 'smooth'})">
+                        
+                        <!-- 3D Interactive Rotating Wireframe Canvas -->
+                        <canvas id="hero3DCanvas" class="absolute inset-0 w-full h-full pointer-events-none"></canvas>
+                        
+                        <!-- Deep Ambient Radial Glows -->
+                        <div class="absolute w-72 h-72 rounded-full bg-purple-600/20 filter blur-3xl pointer-events-none group-hover:bg-purple-600/35 transition-colors duration-700"></div>
+                        <div class="absolute w-44 h-44 rounded-full bg-indigo-500/15 filter blur-2xl pointer-events-none"></div>
+
+                        <!-- 3D Floating Layers -->
+                        <div class="relative z-10 flex flex-col items-center text-center p-6 space-y-6 pointer-events-none">
+                            
+                            <!-- Top Floating Studio Tag -->
+                            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-[10px] uppercase tracking-widest text-studio-accent font-semibold shadow-xl transform group-hover:scale-105 transition-transform duration-300">
+                                <span class="w-2 h-2 rounded-full bg-purple-400 pulse-dot"></span>
+                                <span>3D Creative & Motion Lab</span>
+                            </div>
+
+                            <!-- Central Reel Trigger -->
+                            <div class="flex flex-col items-center">
+                                <div class="w-20 h-20 rounded-full bg-studio-primary/20 backdrop-blur-xl border border-white/25 flex items-center justify-center text-white shadow-2xl shadow-purple-600/40 group-hover:scale-110 group-hover:bg-studio-primary group-hover:shadow-purple-600/60 transition-all duration-300">
+                                    <i data-lucide="play" class="w-7 h-7 fill-white translate-x-0.5"></i>
+                                </div>
+                                <span class="text-xs font-bold uppercase tracking-widest text-white mt-3 group-hover:text-studio-accent transition-colors">Play 2026 Showreel</span>
+                            </div>
+
+                            <!-- Bottom Floating Interactive Deliverable Chips -->
+                            <div class="flex flex-wrap items-center justify-center gap-2 pt-2">
+                                <span class="px-3 py-1 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-[10px] uppercase tracking-wider text-studio-light font-medium shadow-sm">✦ 3D Motion</span>
+                                <span class="px-3 py-1 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-[10px] uppercase tracking-wider text-studio-light font-medium shadow-sm">✦ Visual Identity</span>
+                                <span class="px-3 py-1 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-[10px] uppercase tracking-wider text-studio-light font-medium shadow-sm">✦ Web Architecture</span>
+                            </div>
+                        </div>
+
+                        <!-- Studio Coordinates Stamp -->
+                        <div class="absolute bottom-4 left-6 text-[9px] uppercase tracking-widest text-studio-muted font-mono pointer-events-none">
+                            <span>KOCHI // 9.9312° N, 76.2673° E</span>
+                        </div>
+                        <div class="absolute bottom-4 right-6 text-[9px] uppercase tracking-widest text-studio-accent font-bold pointer-events-none">
+                            <span>GLOBAL REACH</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Kinetic Infinite Marquee (Maditrones Agency Ticker) -->
+    <div class="py-6 border-y border-studio-border bg-studio-surface/60 overflow-hidden relative z-10">
+        <div class="animate-marquee whitespace-nowrap flex items-center gap-10 text-xs sm:text-sm uppercase tracking-widest font-bold text-studio-muted">
+            <span class="flex items-center gap-4 text-white"><span>BRAND STRATEGY</span> <span class="text-studio-primary">✦</span></span>
+            <span class="flex items-center gap-4"><span>BESPOKE WEB ENGINEERING</span> <span class="text-studio-primary">✦</span></span>
+            <span class="flex items-center gap-4 text-white"><span>PERFORMANCE MARKETING</span> <span class="text-studio-primary">✦</span></span>
+            <span class="flex items-center gap-4"><span>3D MOTION & COMMERCIAL FILMS</span> <span class="text-studio-primary">✦</span></span>
+            <span class="flex items-center gap-4 text-white"><span>PACKAGING & IDENTITY SYSTEMS</span> <span class="text-studio-primary">✦</span></span>
+            <span class="flex items-center gap-4"><span>HIGH-CONVERSION FUNNELS</span> <span class="text-studio-primary">✦</span></span>
+            <span class="flex items-center gap-4 text-white"><span>BRAND STRATEGY</span> <span class="text-studio-primary">✦</span></span>
+            <span class="flex items-center gap-4"><span>BESPOKE WEB ENGINEERING</span> <span class="text-studio-primary">✦</span></span>
+            <span class="flex items-center gap-4 text-white"><span>PERFORMANCE MARKETING</span> <span class="text-studio-primary">✦</span></span>
+            <span class="flex items-center gap-4"><span>3D MOTION & COMMERCIAL FILMS</span> <span class="text-studio-primary">✦</span></span>
+        </div>
+    </div>
+
+    <!-- Core Capabilities & Services (Maditrones Agency Core Offerings) -->
+    <section id="services" class="py-28 border-b border-studio-border relative z-10">
+        <div class="max-w-7xl mx-auto px-6 sm:px-10">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-6">
+                <div>
+                    <span class="text-xs uppercase tracking-widest text-studio-primary font-bold">Capabilities</span>
+                    <h2 class="font-display text-3xl sm:text-6xl font-extrabold text-white mt-3">Our Core Services</h2>
+                </div>
+                <p class="text-studio-muted text-sm sm:text-base max-w-md font-light leading-relaxed">
+                    We eliminate the noise. Every capability is engineered to establish category dominance and deliver measurable financial outcomes.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- 01. Branding & Visual Identity -->
+                <div class="p-10 rounded-3xl bg-studio-card border border-studio-border agency-card-hover space-y-6 group">
+                    <div class="flex items-center justify-between">
+                        <span class="font-display text-2xl font-black text-studio-primary">01</span>
+                        <div class="w-12 h-12 rounded-2xl bg-studio-surface border border-studio-border text-studio-accent flex items-center justify-center group-hover:bg-studio-primary group-hover:text-white transition-colors">
+                            <i data-lucide="palette" class="w-6 h-6"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="font-display text-2xl sm:text-3xl font-bold text-white group-hover:text-studio-primary transition-colors">Branding & Identity Systems</h3>
+                        <p class="text-studio-muted text-sm leading-relaxed font-light mt-3">
+                            We build distinctive visual identities that command authority. From naming and positioning to comprehensive logo suites, luxury packaging, typography guidelines, and brand design systems.
+                        </p>
+                    </div>
+                    <div class="pt-6 border-t border-studio-border flex flex-wrap gap-2 text-xs">
+                        <span class="px-3.5 py-1.5 rounded-full bg-studio-surface border border-studio-border text-studio-light">Brand Strategy & Positioning</span>
+                        <span class="px-3.5 py-1.5 rounded-full bg-studio-surface border border-studio-border text-studio-light">Visual Identity & Logos</span>
+                        <span class="px-3.5 py-1.5 rounded-full bg-studio-surface border border-studio-border text-studio-light">Packaging & Print Design</span>
+                        <span class="px-3.5 py-1.5 rounded-full bg-studio-surface border border-studio-border text-studio-light">Brand Guidelines</span>
+                    </div>
+                </div>
+
+                <!-- 02. Web Engineering & UI/UX -->
+                <div class="p-10 rounded-3xl bg-studio-card border border-studio-border agency-card-hover space-y-6 group">
+                    <div class="flex items-center justify-between">
+                        <span class="font-display text-2xl font-black text-studio-primary">02</span>
+                        <div class="w-12 h-12 rounded-2xl bg-studio-surface border border-studio-border text-studio-accent flex items-center justify-center group-hover:bg-studio-primary group-hover:text-white transition-colors">
+                            <i data-lucide="layout" class="w-6 h-6"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="font-display text-2xl sm:text-3xl font-bold text-white group-hover:text-studio-primary transition-colors">Web Design & Engineering</h3>
+                        <p class="text-studio-muted text-sm leading-relaxed font-light mt-3">
+                            Bespoke websites that marry high aesthetic craft with blazing speed. We design custom mobile-first digital experiences optimized to convert high-ticket inquiries and scale revenue.
+                        </p>
+                    </div>
+                    <div class="pt-6 border-t border-studio-border flex flex-wrap gap-2 text-xs">
+                        <span class="px-3.5 py-1.5 rounded-full bg-studio-surface border border-studio-border text-studio-light">Custom UI/UX Prototypes</span>
+                        <span class="px-3.5 py-1.5 rounded-full bg-studio-surface border border-studio-border text-studio-light">Mobile-First Architecture</span>
+                        <span class="px-3.5 py-1.5 rounded-full bg-studio-surface border border-studio-border text-studio-light">Conversion Optimization</span>
+                        <span class="px-3.5 py-1.5 rounded-full bg-studio-surface border border-studio-border text-studio-light">Ultra-Fast Load Times</span>
+                    </div>
+                </div>
+
+                <!-- 03. Digital Marketing & Paid Acquisition -->
+                <div class="p-10 rounded-3xl bg-studio-card border border-studio-border agency-card-hover space-y-6 group">
+                    <div class="flex items-center justify-between">
+                        <span class="font-display text-2xl font-black text-studio-primary">03</span>
+                        <div class="w-12 h-12 rounded-2xl bg-studio-surface border border-studio-border text-studio-accent flex items-center justify-center group-hover:bg-studio-primary group-hover:text-white transition-colors">
+                            <i data-lucide="trending-up" class="w-6 h-6"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="font-display text-2xl sm:text-3xl font-bold text-white group-hover:text-studio-primary transition-colors">Performance Media & SEO</h3>
+                        <p class="text-studio-muted text-sm leading-relaxed font-light mt-3">
+                            Calculated paid campaigns across Meta (Instagram & Facebook), Google Search, and LinkedIn. Coupled with comprehensive technical SEO to capture organic search intent and scale customer acquisition.
+                        </p>
+                    </div>
+                    <div class="pt-6 border-t border-studio-border flex flex-wrap gap-2 text-xs">
+                        <span class="px-3.5 py-1.5 rounded-full bg-studio-surface border border-studio-border text-studio-light">Meta & Google Ad Funnels</span>
+                        <span class="px-3.5 py-1.5 rounded-full bg-studio-surface border border-studio-border text-studio-light">High-ROAS Media Buying</span>
+                        <span class="px-3.5 py-1.5 rounded-full bg-studio-surface border border-studio-border text-studio-light">Technical SEO & Keywords</span>
+                        <span class="px-3.5 py-1.5 rounded-full bg-studio-surface border border-studio-border text-studio-light">Direct Revenue Attribution</span>
+                    </div>
+                </div>
+
+                <!-- 04. Video Production & 3D Motion -->
+                <div class="p-10 rounded-3xl bg-studio-card border border-studio-border agency-card-hover space-y-6 group">
+                    <div class="flex items-center justify-between">
+                        <span class="font-display text-2xl font-black text-studio-primary">04</span>
+                        <div class="w-12 h-12 rounded-2xl bg-studio-surface border border-studio-border text-studio-accent flex items-center justify-center group-hover:bg-studio-primary group-hover:text-white transition-colors">
+                            <i data-lucide="video" class="w-6 h-6"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="font-display text-2xl sm:text-3xl font-bold text-white group-hover:text-studio-primary transition-colors">Commercial Films & 3D Motion</h3>
+                        <p class="text-studio-muted text-sm leading-relaxed font-light mt-3">
+                            Full in-house studio production for viral vertical reels, 3D product visualizations, cinematic brand films, and high-converting ad copy written to stop the scroll and drive action.
+                        </p>
+                    </div>
+                    <div class="pt-6 border-t border-studio-border flex flex-wrap gap-2 text-xs">
+                        <span class="px-3.5 py-1.5 rounded-full bg-studio-surface border border-studio-border text-studio-light">Vertical Reels Production</span>
+                        <span class="px-3.5 py-1.5 rounded-full bg-studio-surface border border-studio-border text-studio-light">3D Product Animation</span>
+                        <span class="px-3.5 py-1.5 rounded-full bg-studio-surface border border-studio-border text-studio-light">Cinematic Commercials</span>
+                        <span class="px-3.5 py-1.5 rounded-full bg-studio-surface border border-studio-border text-studio-light">Direct-Response Copywriting</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The 4-Step Agency Framework (Maditrones Signature Process) -->
+    <section id="process" class="py-28 border-b border-studio-border bg-studio-surface/30 relative z-10">
+        <div class="max-w-7xl mx-auto px-6 sm:px-10">
+            <div class="max-w-3xl mb-20 space-y-4">
+                <span class="text-xs uppercase tracking-widest text-studio-primary font-bold">The Methodology</span>
+                <h2 class="font-display text-3xl sm:text-6xl font-extrabold text-white">How We Build For Scale</h2>
+                <p class="text-studio-muted text-base sm:text-lg font-light leading-relaxed">
+                    A rigorous four-phase execution model that removes guesswork and guarantees creative excellence.
+                </p>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- 01. Listen -->
+                <div class="p-8 rounded-3xl bg-studio-card border border-studio-border agency-card-hover space-y-4 group">
+                    <span class="font-display text-3xl font-black text-studio-primary group-hover:text-studio-accent transition-colors">01</span>
+                    <h4 class="font-display text-xl font-bold text-white">Listen</h4>
+                    <p class="text-studio-muted text-xs leading-relaxed font-light">
+                        We begin by thoroughly understanding your business model, customer pain points, and current market barriers before recommending any creative or media solutions.
+                    </p>
+                </div>
+
+                <!-- 02. Define -->
+                <div class="p-8 rounded-3xl bg-studio-card border border-studio-border agency-card-hover space-y-4 group">
+                    <span class="font-display text-3xl font-black text-studio-primary group-hover:text-studio-accent transition-colors">02</span>
+                    <h4 class="font-display text-xl font-bold text-white">Define</h4>
+                    <p class="text-studio-muted text-xs leading-relaxed font-light">
+                        We formulate the positioning blueprint, visual tone, audience segmentation, and key milestones into a transparent, actionable project roadmap.
+                    </p>
+                </div>
+
+                <!-- 03. Build -->
+                <div class="p-8 rounded-3xl bg-studio-card border border-studio-border agency-card-hover space-y-4 group">
+                    <span class="font-display text-3xl font-black text-studio-primary group-hover:text-studio-accent transition-colors">03</span>
+                    <h4 class="font-display text-xl font-bold text-white">Build</h4>
+                    <p class="text-studio-muted text-xs leading-relaxed font-light">
+                        Our in-house design, engineering, and cinematic video crew produces all deliverables with extreme craftsmanship, testing, and attention to detail.
+                    </p>
+                </div>
+
+                <!-- 04. Improve -->
+                <div class="p-8 rounded-3xl bg-studio-card border border-studio-border agency-card-hover space-y-4 group">
+                    <span class="font-display text-3xl font-black text-studio-primary group-hover:text-studio-accent transition-colors">04</span>
+                    <h4 class="font-display text-xl font-bold text-white">Improve</h4>
+                    <p class="text-studio-muted text-xs leading-relaxed font-light">
+                        We don't abandon the ship after launch. We measure live customer response, analyze conversion rates, and continually iterate for maximum profitability.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Selected Case Studies (Maditrones Agency Showcase) -->
+    <section id="work" class="py-28 border-b border-studio-border relative z-10">
+        <div class="max-w-7xl mx-auto px-6 sm:px-10">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-6">
+                <div>
+                    <span class="text-xs uppercase tracking-widest text-studio-primary font-bold">Selected Work</span>
+                    <h2 class="font-display text-3xl sm:text-6xl font-extrabold text-white mt-3">Proof of Execution</h2>
+                </div>
+                <a href="#contact" class="text-xs uppercase tracking-widest text-white hover:text-studio-primary transition-colors flex items-center gap-2 group font-semibold">
+                    <span>Discuss Your Project</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-10">
+                <!-- Case 1 -->
+                <div class="rounded-3xl bg-studio-card border border-studio-border overflow-hidden agency-card-hover group">
+                    <div class="h-80 bg-gradient-to-tr from-purple-950/70 via-studio-surface to-slate-950 p-8 flex flex-col justify-between relative overflow-hidden">
+                        <div class="flex justify-between items-center z-10">
+                            <span class="px-3.5 py-1 rounded-full bg-studio-primary/20 text-studio-accent text-xs font-semibold uppercase tracking-wider">Branding & Digital Experience</span>
+                            <span class="text-xs text-studio-muted font-mono">2026</span>
+                        </div>
+                        <div class="z-10 group-hover:translate-y-[-4px] transition-transform duration-300">
+                            <span class="text-xs uppercase tracking-widest text-studio-accent font-semibold">Luxury Interior & Architecture</span>
+                            <h4 class="font-display text-3xl sm:text-4xl font-extrabold text-white mt-1">Aura Living Spaces</h4>
+                        </div>
+                    </div>
+                    <div class="p-8 space-y-4">
+                        <p class="text-studio-muted text-sm font-light leading-relaxed">
+                            Comprehensive brand identity transformation and bespoke portfolio website crafted to attract high-net-worth residential and commercial architecture clients across South India.
+                        </p>
+                        <div class="flex items-center justify-between pt-4 border-t border-studio-border text-xs">
+                            <span class="text-emerald-400 font-bold">↑ 400% Inbound Qualified Leads</span>
+                            <span class="text-studio-muted">Kochi Studio Project</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case 2 -->
+                <div class="rounded-3xl bg-studio-card border border-studio-border overflow-hidden agency-card-hover group">
+                    <div class="h-80 bg-gradient-to-tr from-indigo-950/70 via-studio-surface to-slate-950 p-8 flex flex-col justify-between relative overflow-hidden">
+                        <div class="flex justify-between items-center z-10">
+                            <span class="px-3.5 py-1 rounded-full bg-indigo-500/20 text-indigo-300 text-xs font-semibold uppercase tracking-wider">Performance Acquisition</span>
+                            <span class="text-xs text-studio-muted font-mono">2026</span>
+                        </div>
+                        <div class="z-10 group-hover:translate-y-[-4px] transition-transform duration-300">
+                            <span class="text-xs uppercase tracking-widest text-indigo-300 font-semibold">Fintech Mobile Application</span>
+                            <h4 class="font-display text-3xl sm:text-4xl font-extrabold text-white mt-1">Finnova Pay</h4>
+                        </div>
+                    </div>
+                    <div class="p-8 space-y-4">
+                        <p class="text-studio-muted text-sm font-light leading-relaxed">
+                            Multi-channel paid acquisition funnels across Meta and Google Ads, paired with high-velocity landing pages, delivering an average 4.9x return on advertising spend.
+                        </p>
+                        <div class="flex items-center justify-between pt-4 border-t border-studio-border text-xs">
+                            <span class="text-emerald-400 font-bold">4.9x Attributed ROAS</span>
+                            <span class="text-studio-muted">SaaS Growth Campaign</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Studio Ethos & Leadership (Maditrones-Inspired Authenticity) -->
+    <section id="about" class="py-28 border-b border-studio-border bg-studio-surface/40 relative z-10">
+        <div class="max-w-7xl mx-auto px-6 sm:px-10">
+            <div class="grid lg:grid-cols-12 gap-16 items-center">
+                <div class="lg:col-span-7 space-y-6">
+                    <span class="text-xs uppercase tracking-widest text-studio-primary font-bold">About The Studio</span>
+                    <h2 class="font-display text-3xl sm:text-5xl font-extrabold text-white leading-tight">
+                        Built for Ambitious Brands Ready to Lead.
+                    </h2>
+                    <p class="text-studio-muted text-base sm:text-lg font-light leading-relaxed">
+                        Founded by <strong>Elbinmon Edavazhickal</strong>, Epic Adcraft is an independent creative and digital marketing agency based in Kochi, Kerala. We bridge the gap between creative visual artistry and aggressive commercial performance.
+                    </p>
+                    <p class="text-studio-muted text-base sm:text-lg font-light leading-relaxed">
+                        We reject boilerplate templates and generic agency fluff. Every brand engagement is custom-engineered to command cultural prestige and measurable business scale.
+                    </p>
+
+                    <div class="pt-6 grid grid-cols-2 sm:grid-cols-3 gap-6 border-t border-studio-border">
+                        <div>
+                            <div class="font-display text-2xl font-extrabold text-white">Full In-House</div>
+                            <div class="text-xs text-studio-muted mt-1 font-medium">Design & Production</div>
+                        </div>
+                        <div>
+                            <div class="font-display text-2xl font-extrabold text-white">Data-Driven</div>
+                            <div class="text-xs text-studio-muted mt-1 font-medium">Calculated ROI Growth</div>
+                        </div>
+                        <div>
+                            <div class="font-display text-2xl font-extrabold text-white">Kochi HQ</div>
+                            <div class="text-xs text-studio-muted mt-1 font-medium">Kerala, India</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5">
+                    <div class="p-8 sm:p-12 rounded-3xl bg-studio-card border border-studio-border relative space-y-6 shadow-2xl agency-card-hover">
+                        <i data-lucide="quote" class="w-10 h-10 text-studio-primary/40"></i>
+                        <p class="text-xl sm:text-2xl text-white font-medium leading-relaxed italic">
+                            "True creative leverage happens when strategic positioning meets fearless design and measured digital distribution."
+                        </p>
+                        <div class="pt-6 border-t border-studio-border flex items-center justify-between">
+                            <div>
+                                <div class="font-bold text-white text-base">Elbinmon Edavazhickal</div>
+                                <div class="text-xs text-studio-muted">Founder & Creative Director, Epic Adcraft</div>
+                            </div>
+                            <span class="text-xs uppercase tracking-widest text-studio-accent font-bold">Kochi Studio</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Studio Journal & Perspectives (Top 3 Latest Articles with Images) -->
+    <section id="journal" class="py-28 border-b border-studio-border relative z-10">
+        <div class="max-w-7xl mx-auto px-6 sm:px-10">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+                <div>
+                    <span class="text-xs uppercase tracking-widest text-studio-primary font-bold">Our Journal</span>
+                    <h2 class="font-display text-3xl sm:text-6xl font-extrabold text-white mt-3">Perspectives & Insights</h2>
+                </div>
+                <div class="flex items-center gap-4">
+                    <a href="blog.html" class="px-6 py-3 rounded-full border border-studio-border text-xs uppercase tracking-widest text-white hover:border-studio-primary hover:bg-studio-surface transition-all flex items-center gap-2 group font-semibold">
+                        <span>View All Articles</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Dynamically Loaded Top 3 Articles from blogs.js -->
+            <div id="homeArticlesContainer" class="grid md:grid-cols-3 gap-8">
+                <!-- Injected via blogs.js with cover images -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Consultation & Inquiry (Maditrones-Style Direct Form) -->
+    <section id="contact" class="py-28 relative z-10">
+        <div class="max-w-7xl mx-auto px-6 sm:px-10">
+            <div class="grid lg:grid-cols-12 gap-16">
+                
+                <!-- Contact Details -->
+                <div class="lg:col-span-5 space-y-8">
+                    <div>
+                        <span class="text-xs uppercase tracking-widest text-studio-primary font-bold">Start a Conversation</span>
+                        <h2 class="font-display text-4xl sm:text-6xl font-extrabold text-white mt-3">Let's Build Something Memorable.</h2>
+                    </div>
+                    <p class="text-studio-muted text-base leading-relaxed font-light">
+                        Whether launching a category disruptor, redesigning your digital presence, or scaling paid customer acquisition, we are ready to partner with you.
+                    </p>
+
+                    <div class="space-y-4 pt-2">
+                        <a href="mailto:info@epicadcraft.com" class="p-4 rounded-2xl bg-studio-card border border-studio-border hover:border-studio-primary flex items-center gap-4 transition-colors group">
+                            <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-studio-primary flex items-center justify-center group-hover:bg-studio-primary group-hover:text-white transition-all">
+                                <i data-lucide="mail" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <span class="text-[11px] text-studio-muted block uppercase tracking-wider font-semibold">Email Desk</span>
+                                <span class="text-sm font-semibold text-white group-hover:text-studio-primary transition-colors">info@epicadcraft.com</span>
+                            </div>
+                        </a>
+
+                        <a href="https://wa.me/919999999999?text=Hello%20Epic%20Adcraft%20Team" target="_blank" class="p-4 rounded-2xl bg-studio-card border border-studio-border hover:border-emerald-500/50 flex items-center gap-4 transition-colors group">
+                            <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center group-hover:bg-emerald-500 group-hover:text-white transition-all">
+                                <i data-lucide="message-circle" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <span class="text-[11px] text-studio-muted block uppercase tracking-wider font-semibold">WhatsApp Desk</span>
+                                <span class="text-sm font-semibold text-white group-hover:text-emerald-400 transition-colors">+91 (Direct Studio Line)</span>
+                            </div>
+                        </a>
+
+                        <div class="p-4 rounded-2xl bg-studio-card border border-studio-border flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center">
+                                <i data-lucide="map-pin" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <span class="text-[11px] text-studio-muted block uppercase tracking-wider font-semibold">Studio Location</span>
+                                <span class="text-sm font-semibold text-white">Kochi, Kerala, India</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Inquiry Form -->
+                <div class="lg:col-span-7">
+                    <div class="p-8 sm:p-12 rounded-3xl bg-studio-card border border-studio-border shadow-2xl">
+                        <h3 class="font-display text-2xl font-bold text-white mb-2">Project Brief</h3>
+                        <p class="text-xs text-studio-muted uppercase tracking-wider mb-8 font-semibold">Share your goals and we will respond within 4 business hours</p>
+
+                        <form id="contactForm" class="space-y-6">
+                            <div class="grid sm:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-xs uppercase tracking-widest text-studio-muted mb-2 font-semibold">Your Name</label>
+                                    <input type="text" required placeholder="Full Name" class="w-full px-4 py-3.5 rounded-xl bg-studio-surface border border-studio-border text-white text-sm focus:outline-none focus:border-studio-primary transition-colors">
+                                </div>
+                                <div>
+                                    <label class="block text-xs uppercase tracking-widest text-studio-muted mb-2 font-semibold">Email Address</label>
+                                    <input type="email" required placeholder="name@company.com" class="w-full px-4 py-3.5 rounded-xl bg-studio-surface border border-studio-border text-white text-sm focus:outline-none focus:border-studio-primary transition-colors">
+                                </div>
+                            </div>
+
+                            <div class="grid sm:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-xs uppercase tracking-widest text-studio-muted mb-2 font-semibold">Brand / Company</label>
+                                    <input type="text" placeholder="Company Name" class="w-full px-4 py-3.5 rounded-xl bg-studio-surface border border-studio-border text-white text-sm focus:outline-none focus:border-studio-primary transition-colors">
+                                </div>
+                                <div>
+                                    <label class="block text-xs uppercase tracking-widest text-studio-muted mb-2 font-semibold">Phone / WhatsApp</label>
+                                    <input type="tel" required placeholder="+91 ..." class="w-full px-4 py-3.5 rounded-xl bg-studio-surface border border-studio-border text-white text-sm focus:outline-none focus:border-studio-primary transition-colors">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs uppercase tracking-widest text-studio-muted mb-2 font-semibold">Project Overview & Goals</label>
+                                <textarea rows="4" required placeholder="Tell us about your brand and what you want to achieve..." class="w-full px-4 py-3.5 rounded-xl bg-studio-surface border border-studio-border text-white text-sm focus:outline-none focus:border-studio-primary transition-colors resize-none"></textarea>
+                            </div>
+
+                            <button type="submit" class="w-full py-4 rounded-full bg-white text-studio-bg font-display font-extrabold text-sm uppercase tracking-wider hover:bg-studio-accent hover:text-studio-bg transition-all duration-300 flex items-center justify-center gap-2 shadow-xl">
+                                <span>Send Project Brief</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </button>
+                        </form>
+
+                        <div id="formSuccess" class="hidden mt-6 p-4 rounded-2xl bg-emerald-950/40 border border-emerald-500/40 text-emerald-300 text-sm flex items-center gap-3">
+                            <i data-lucide="check" class="w-5 h-5 shrink-0"></i>
+                            <span>Thank you! Your project brief has been received. Our team will contact you shortly.</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- High-Craft Footer -->
+    <footer class="py-14 border-t border-studio-border bg-studio-bg text-studio-muted text-xs">
+        <div class="max-w-7xl mx-auto px-6 sm:px-10 flex flex-col md:flex-row items-center justify-between gap-8">
+            <div class="flex items-center gap-4">
+                <div class="h-12 sm:h-16 w-36 sm:w-48 overflow-hidden flex items-center justify-center">
+                    <img src="logo.png" alt="Epic Adcraft" class="w-full h-auto scale-[2.4] object-contain">
+                </div>
+                <span class="text-studio-muted text-xs border-l border-studio-border pl-4">© 2026 Epic Adcraft. All rights reserved.</span>
+            </div>
+            <div class="flex items-center gap-8 text-xs uppercase tracking-widest font-semibold">
+                <a href="#services" class="hover:text-white transition-colors">Services</a>
+                <a href="#process" class="hover:text-white transition-colors">Process</a>
+                <a href="#work" class="hover:text-white transition-colors">Work</a>
+                <a href="#about" class="hover:text-white transition-colors">About</a>
+                <a href="blog.html" class="hover:text-white transition-colors">Blog</a>
+            </div>
+            <div class="text-xs text-studio-muted">
+                Crafted with intention in Kochi, Kerala.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="blogs.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

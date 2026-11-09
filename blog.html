@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journal & Insights — Epic Adcraft Studio</title>
+    <meta name="description" content="Essays, insights, and field notes on branding, performance marketing, and creative design from Epic Adcraft in Kochi.">
+    <!-- Google Font: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        display: ['Poppins', 'sans-serif'],
+                        serif: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        studio: {
+                            base: '#08070c',
+                            panel: '#0f0e17',
+                            card: '#141320',
+                            border: 'rgba(255, 255, 255, 0.08)',
+                            muted: '#9a98a8',
+                            purple: '#8b5cf6',
+                            deepPurple: '#6d28d9',
+                            accent: '#c4b5fd',
+                            sand: '#f5f4f8'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-studio-base text-studio-sand font-sans antialiased selection:bg-studio-purple selection:text-white">
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-studio-base/80 border-b border-studio-border">
+        <div class="max-w-7xl mx-auto px-6 sm:px-10 h-24 sm:h-28 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-4 group py-2">
+                <img src="logo.png" alt="Epic Adcraft" class="h-16 sm:h-20 w-auto object-contain transition-transform duration-300 group-hover:scale-105">
+                <span class="hidden sm:inline-block text-[11px] uppercase tracking-widest text-studio-muted pl-3 border-l border-studio-border font-medium">Journal</span>
+            </a>
+
+            <div class="flex items-center gap-4">
+                <a href="index.html" class="text-xs uppercase tracking-widest text-studio-muted hover:text-white transition-colors flex items-center gap-2">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                    <span>Back to Home</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-40 pb-28 min-h-screen">
+        <div class="max-w-7xl mx-auto px-6 sm:px-10">
+            <!-- Header title -->
+            <div class="max-w-3xl mb-16 space-y-4">
+                <span class="text-xs uppercase tracking-widest text-studio-accent font-semibold">The Complete Archive</span>
+                <h1 class="font-serif text-5xl sm:text-7xl text-white font-normal leading-tight">
+                    All Essays, Articles & Strategic Field Notes
+                </h1>
+                <p class="text-studio-muted text-lg font-light leading-relaxed">
+                    Explore our perspectives on brand positioning, high-converting web architecture, and creative growth.
+                </p>
+            </div>
+
+            <!-- Filter & Search Bar -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-12 pb-6 border-b border-studio-border">
+                <div class="flex flex-wrap gap-2" id="categoryFilters">
+                    <button class="filter-tab active px-4 py-2 rounded-full text-xs font-semibold bg-white text-studio-base transition-colors" data-cat="all">All Posts</button>
+                    <button class="filter-tab px-4 py-2 rounded-full text-xs font-semibold border border-studio-border text-studio-muted hover:text-white transition-colors" data-cat="Brand Strategy">Brand Strategy</button>
+                    <button class="filter-tab px-4 py-2 rounded-full text-xs font-semibold border border-studio-border text-studio-muted hover:text-white transition-colors" data-cat="Performance Media">Performance Media</button>
+                    <button class="filter-tab px-4 py-2 rounded-full text-xs font-semibold border border-studio-border text-studio-muted hover:text-white transition-colors" data-cat="Creative Direction">Creative Direction</button>
+                </div>
+
+                <div class="relative w-full sm:w-64">
+                    <input type="text" id="searchInput" placeholder="Search essays..." class="w-full pl-9 pr-4 py-2 rounded-full bg-studio-panel border border-studio-border text-xs text-white placeholder-studio-muted focus:outline-none focus:border-studio-purple">
+                    <i data-lucide="search" class="w-4 h-4 text-studio-muted absolute left-3 top-1/2 -translate-y-1/2"></i>
+                </div>
+            </div>
+
+            <!-- Articles Grid -->
+            <div id="articlesContainer" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Dynamically rendered by JS -->
+            </div>
+
+            <!-- Empty state -->
+            <div id="emptyState" class="hidden text-center py-20">
+                <p class="text-studio-muted text-base font-light">No articles found matching your criteria.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- New Blog Post Modal (Simple Publisher) -->
+    <div id="newPostModal" class="fixed inset-0 z-50 hidden overflow-y-auto bg-black/85 backdrop-blur-md p-4 sm:p-6 md:p-10">
+        <div class="max-w-2xl mx-auto bg-studio-panel border border-studio-border rounded-3xl p-6 sm:p-10 shadow-2xl relative my-8">
+            <div class="flex items-center justify-between border-b border-studio-border pb-5 mb-6">
+                <div>
+                    <h3 class="font-serif text-2xl text-white font-medium">Publish New Article</h3>
+                    <p class="text-xs text-studio-muted mt-1">This will automatically appear on the home page and here.</p>
+                </div>
+                <button id="closeNewPostModal" class="p-2 rounded-full hover:bg-studio-base text-studio-muted hover:text-white">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <!-- Quick File Upload Dropzone -->
+            <div class="mb-6 p-4 rounded-2xl border-2 border-dashed border-studio-border hover:border-studio-purple/60 bg-studio-base/40 text-center transition-colors">
+                <input type="file" id="blogFileInput" accept=".txt,.md,.json" class="hidden">
+                <label for="blogFileInput" class="cursor-pointer flex flex-col items-center gap-1.5">
+                    <i data-lucide="file-up" class="w-6 h-6 text-studio-purple"></i>
+                    <span class="text-xs font-semibold text-white">Click or drag & drop a file (.txt, .md, .json)</span>
+                    <span class="text-[11px] text-studio-muted">We will automatically extract the title and content for you</span>
+                </label>
+            </div>
+
+            <form id="newPostForm" class="space-y-5">
+                <div>
+                    <label class="block text-xs uppercase tracking-widest text-studio-muted mb-2">Article Title</label>
+                    <input type="text" id="postTitle" required placeholder="e.g. The Future of Creative Advertising in 2027" class="w-full px-4 py-3 rounded-xl bg-studio-base border border-studio-border text-white text-sm focus:outline-none focus:border-studio-purple">
+                </div>
+
+                <div class="grid sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs uppercase tracking-widest text-studio-muted mb-2">Category</label>
+                        <select id="postCategory" class="w-full px-4 py-3 rounded-xl bg-studio-base border border-studio-border text-white text-sm focus:outline-none focus:border-studio-purple">
+                            <option value="Brand Strategy">Brand Strategy</option>
+                            <option value="Performance Media">Performance Media</option>
+                            <option value="Creative Direction">Creative Direction</option>
+                            <option value="Web & Technology">Web & Technology</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase tracking-widest text-studio-muted mb-2">Estimated Read Time</label>
+                        <input type="text" id="postReadTime" value="4 min read" class="w-full px-4 py-3 rounded-xl bg-studio-base border border-studio-border text-white text-sm focus:outline-none focus:border-studio-purple">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs uppercase tracking-widest text-studio-muted mb-2">Author Name</label>
+                    <input type="text" id="postAuthor" value="Elbinmon Edavazhickal" required class="w-full px-4 py-3 rounded-xl bg-studio-base border border-studio-border text-white text-sm focus:outline-none focus:border-studio-purple">
+                </div>
+
+                <div>
+                    <label class="block text-xs uppercase tracking-widest text-studio-muted mb-2">Short Summary / Excerpt (Displayed on card)</label>
+                    <textarea id="postExcerpt" rows="2" required placeholder="A brief one or two sentence overview..." class="w-full px-4 py-3 rounded-xl bg-studio-base border border-studio-border text-white text-sm focus:outline-none focus:border-studio-purple resize-none"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-xs uppercase tracking-widest text-studio-muted mb-2">Full Article Content (Paragraphs)</label>
+                    <textarea id="postContent" rows="6" required placeholder="Write your full article thoughts here..." class="w-full px-4 py-3 rounded-xl bg-studio-base border border-studio-border text-white text-sm focus:outline-none focus:border-studio-purple resize-none"></textarea>
+                </div>
+
+                <div class="pt-4 flex items-center justify-end gap-3">
+                    <button type="button" id="cancelNewPost" class="px-5 py-2.5 rounded-full border border-studio-border text-xs uppercase tracking-widest text-studio-muted hover:text-white">Cancel</button>
+                    <button type="submit" class="px-6 py-2.5 rounded-full bg-studio-purple text-white text-xs uppercase tracking-widest font-semibold hover:bg-studio-accent hover:text-studio-base transition-colors flex items-center gap-2">
+                        <i data-lucide="check" class="w-4 h-4"></i>
+                        <span>Publish Article</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Minimal Footer -->
+    <footer class="py-12 border-t border-studio-border bg-studio-base text-studio-muted text-xs">
+        <div class="max-w-7xl mx-auto px-6 sm:px-10 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-3">
+                <span class="w-2 h-2 rounded-full bg-studio-purple"></span>
+                <span class="text-white font-serif tracking-wider text-base font-medium">EPIC ADCRAFT</span>
+                <span class="text-studio-muted ml-2">© 2026. All rights reserved.</span>
+            </div>
+            <div>
+                Crafted with intention in Kochi, Kerala.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="blogs.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.lucide) lucide.createIcons();
+            renderArticles('all', '');
+            initPublisher();
+            initFilters();
+        });
+
+        function renderArticles(category = 'all', searchQuery = '') {
+            const container = document.getElementById('articlesContainer');
+            const empty = document.getElementById('emptyState');
+            let articles = getAllArticles();
+
+            if (category !== 'all') {
+                articles = articles.filter(a => a.category.toLowerCase() === category.toLowerCase());
+            }
+
+            if (searchQuery.trim() !== '') {
+                const q = searchQuery.toLowerCase();
+                articles = articles.filter(a => a.title.toLowerCase().includes(q) || a.excerpt.toLowerCase().includes(q));
+            }
+
+            if (articles.length === 0) {
+                container.innerHTML = '';
+                empty.classList.remove('hidden');
+                return;
+            }
+
+            empty.classList.add('hidden');
+            container.innerHTML = articles.map(article => renderBlogCardHTML(article)).join('');
+            if (window.lucide) lucide.createIcons();
+        }
+
+        function initFilters() {
+            const tabs = document.querySelectorAll('.filter-tab');
+            const search = document.getElementById('searchInput');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => {
+                        t.classList.remove('bg-white', 'text-studio-base');
+                        t.classList.add('border', 'border-studio-border', 'text-studio-muted');
+                    });
+                    tab.classList.add('bg-white', 'text-studio-base');
+                    tab.classList.remove('border', 'border-studio-border', 'text-studio-muted');
+
+                    renderArticles(tab.getAttribute('data-cat'), search.value);
+                });
+            });
+
+            search.addEventListener('input', (e) => {
+                const activeTab = document.querySelector('.filter-tab.bg-white');
+                const cat = activeTab ? activeTab.getAttribute('data-cat') : 'all';
+                renderArticles(cat, e.target.value);
+            });
+        }
+
+        function initPublisher() {
+            const modal = document.getElementById('newPostModal');
+            const openBtn = document.getElementById('openNewPostModal');
+            const closeBtn = document.getElementById('closeNewPostModal');
+            const cancelBtn = document.getElementById('cancelNewPost');
+            const form = document.getElementById('newPostForm');
+
+            function openModal() {
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeModal() {
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+
+            openBtn.addEventListener('click', openModal);
+            closeBtn.addEventListener('click', closeModal);
+            cancelBtn.addEventListener('click', closeModal);
+
+            // File Upload Handler
+            const fileInput = document.getElementById('blogFileInput');
+            if (fileInput) {
+                fileInput.addEventListener('change', (e) => {
+                    const file = e.target.files[0];
+                    if (!file) return;
+
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        const text = event.target.result;
+                        if (file.name.endsWith('.json')) {
+                            try {
+                                const parsed = JSON.parse(text);
+                                if (parsed.title) document.getElementById('postTitle').value = parsed.title;
+                                if (parsed.category) document.getElementById('postCategory').value = parsed.category;
+                                if (parsed.excerpt) document.getElementById('postExcerpt').value = parsed.excerpt;
+                                if (parsed.content) document.getElementById('postContent').value = parsed.content;
+                            } catch (err) {
+                                console.error('Invalid JSON', err);
+                            }
+                        } else {
+                            // Text or Markdown
+                            const lines = text.split('\n').filter(l => l.trim() !== '');
+                            if (lines.length > 0) {
+                                document.getElementById('postTitle').value = lines[0].replace(/^#+\s*/, '');
+                                if (lines.length > 1) {
+                                    document.getElementById('postExcerpt').value = lines[1];
+                                }
+                                document.getElementById('postContent').value = lines.slice(1).join('\n\n');
+                            }
+                        }
+                    };
+                    reader.readAsText(file);
+                });
+            }
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const contentRaw = document.getElementById('postContent').value;
+                const formattedContent = contentRaw.split('\n\n').map(p => `<p class="mb-4">${p.trim()}</p>`).join('');
+
+                publishNewArticle({
+                    title: document.getElementById('postTitle').value,
+                    category: document.getElementById('postCategory').value,
+                    readTime: document.getElementById('postReadTime').value,
+                    author: document.getElementById('postAuthor').value,
+                    excerpt: document.getElementById('postExcerpt').value,
+                    content: formattedContent
+                });
+
+                form.reset();
+                closeModal();
+                renderArticles();
+            });
+        }
+    </script>
+</body>
+</html>
