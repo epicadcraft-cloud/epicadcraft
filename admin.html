@@ -778,18 +778,22 @@
                 }
             }
 
-            try {
-                const saved = localStorage.getItem('epic_adcraft_firebase_config');
-                if (saved) {
-                    const c = JSON.parse(saved);
-                    if (c.apiKey) document.getElementById('fbApiKey').value = c.apiKey;
-                    if (c.projectId) document.getElementById('fbProjectId').value = c.projectId;
-                    if (c.authDomain) document.getElementById('fbAuthDomain').value = c.authDomain;
-                    if (c.storageBucket) document.getElementById('fbStorageBucket').value = c.storageBucket;
-                    if (c.messagingSenderId) document.getElementById('fbSenderId').value = c.messagingSenderId;
-                    if (c.appId) document.getElementById('fbAppId').value = c.appId;
-                }
-            } catch(e) {}
+            const configToUse = (function() {
+                try {
+                    const saved = localStorage.getItem('epic_adcraft_firebase_config');
+                    if (saved) return JSON.parse(saved);
+                } catch(e) {}
+                return window.FIREBASE_CONFIG;
+            })();
+
+            if (configToUse && configToUse.apiKey) {
+                if (document.getElementById('fbApiKey')) document.getElementById('fbApiKey').value = configToUse.apiKey;
+                if (document.getElementById('fbProjectId')) document.getElementById('fbProjectId').value = configToUse.projectId;
+                if (document.getElementById('fbAuthDomain')) document.getElementById('fbAuthDomain').value = configToUse.authDomain;
+                if (document.getElementById('fbStorageBucket')) document.getElementById('fbStorageBucket').value = configToUse.storageBucket;
+                if (document.getElementById('fbSenderId')) document.getElementById('fbSenderId').value = configToUse.messagingSenderId;
+                if (document.getElementById('fbAppId')) document.getElementById('fbAppId').value = configToUse.appId;
+            }
 
             updateBadge();
 

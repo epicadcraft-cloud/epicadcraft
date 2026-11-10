@@ -1,12 +1,13 @@
 // Epic Adcraft — Bulletproof Central Blog & Cloud Engine (Firebase + Local Storage Fail-Safe)
 
-window.FIREBASE_CONFIG = window.FIREBASE_CONFIG || {
-    apiKey: "",
-    authDomain: "",
-    projectId: "",
-    storageBucket: "",
-    messagingSenderId: "",
-    appId: ""
+window.FIREBASE_CONFIG = {
+    apiKey: "AIzaSyCttVI-p8zQNjIM-PP1Ck9UD01AvvlSAbw",
+    authDomain: "epic-adcraft.firebaseapp.com",
+    projectId: "epic-adcraft",
+    storageBucket: "epic-adcraft.firebasestorage.app",
+    messagingSenderId: "305198304355",
+    appId: "1:305198304355:web:ffce6386d11c0bac2ebc56",
+    measurementId: "G-5BJ26JDYL9"
 };
 
 const DEFAULT_ARTICLES = [
