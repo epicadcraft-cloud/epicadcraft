@@ -199,29 +199,44 @@
             initFilters();
         });
 
-        async function renderArticles(category = 'all', searchQuery = '') {
+        function displayArticles(articles, category = 'all', searchQuery = '') {
             const container = document.getElementById('articlesContainer');
             const empty = document.getElementById('emptyState');
-            let articles = await getAllArticles();
+            if (!container) return;
 
+            let filtered = articles || [];
             if (category !== 'all') {
-                articles = articles.filter(a => a.category.toLowerCase() === category.toLowerCase());
+                filtered = filtered.filter(a => a.category && a.category.toLowerCase() === category.toLowerCase());
             }
 
             if (searchQuery.trim() !== '') {
                 const q = searchQuery.toLowerCase();
-                articles = articles.filter(a => a.title.toLowerCase().includes(q) || a.excerpt.toLowerCase().includes(q));
+                filtered = filtered.filter(a => (a.title && a.title.toLowerCase().includes(q)) || (a.excerpt && a.excerpt.toLowerCase().includes(q)));
             }
 
-            if (articles.length === 0) {
+            if (filtered.length === 0) {
                 container.innerHTML = '';
-                empty.classList.remove('hidden');
+                if (empty) empty.classList.remove('hidden');
                 return;
             }
 
-            empty.classList.add('hidden');
-            container.innerHTML = articles.map(article => renderBlogCardHTML(article)).join('');
+            if (empty) empty.classList.add('hidden');
+            container.innerHTML = filtered.map(article => renderBlogCardHTML(article)).join('');
             if (window.lucide) lucide.createIcons();
+        }
+
+        async function renderArticles(category = 'all', searchQuery = '') {
+            // 1. Render immediately from local memory (NEVER blank!)
+            const local = typeof getLocalArticles === 'function' ? getLocalArticles() : DEFAULT_ARTICLES;
+            displayArticles(local, category, searchQuery);
+
+            // 2. Refresh from cloud in background
+            try {
+                const articles = await getAllArticles();
+                displayArticles(articles, category, searchQuery);
+            } catch (err) {
+                console.warn("Using local cache:", err);
+            }
         }
 
         function initFilters() {

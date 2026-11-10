@@ -109,7 +109,7 @@
                         <i data-lucide="key" class="w-3.5 h-3.5"></i>
                         <span>Change Password</span>
                     </button>
-                    <button id="logoutBtn" class="px-4 py-2 rounded-full border border-studio-border text-xs uppercase tracking-wider text-studio-muted hover:text-white hover:border-rose-500/50 hover:bg-rose-950/20 transition-all flex items-center gap-1.5">
+                    <button id="logoutBtn" onclick="logoutAdmin()" class="px-4 py-2 rounded-full border border-studio-border text-xs uppercase tracking-wider text-studio-muted hover:text-white hover:border-rose-500/50 hover:bg-rose-950/20 transition-all flex items-center gap-1.5">
                         <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
                         <span>Lock & Exit</span>
                     </button>
@@ -163,6 +163,7 @@
                         <li><a href="https://console.firebase.google.com" target="_blank" class="text-studio-purple underline font-semibold">console.firebase.google.com</a> തുറന്ന് നിങ്ങളുടെ ജിമെയിൽ വെച്ച് ലോഗിൻ ചെയ്യുക.</li>
                         <li><strong>Add project</strong> ക്ലിക്ക് ചെയ്ത് ഒരു പേര് നൽകുക (e.g. <em>Epic Adcraft</em>).</li>
                         <li>സൈഡ് മെനുവിൽ <strong>Build → Firestore Database</strong> ക്ലിക്ക് ചെയ്ത് <strong>Create Database</strong> കൊടുക്കുക (Select <em>Start in test mode</em>).</li>
+                        <li><strong>പ്രധാനപ്പെട്ട കാര്യം (Rules):</strong> Firestore ഉണ്ടാക്കിക്കഴിഞ്ഞാൽ മുകളിൽ <strong>Rules</strong> ടാബ് ക്ലിക്ക് ചെയ്ത് <code>allow read, write: if true;</code> എന്ന് നൽകി <strong>Publish</strong> ക്ലിക്ക് ചെയ്യുക (ഇല്ലെങ്കിൽ ഗൂഗിൾ പെർമിഷൻ ബ്ലോക്ക് ചെയ്യും).</li>
                         <li>ഹോം സ്ക്രീനിൽ വെബ് ഐക്കൺ (<strong>&lt;/&gt;</strong>) ക്ലിക്ക് ചെയ്ത് ആപ്പ് ആഡ് ചെയ്യുക, ലഭിക്കുന്ന <strong>firebaseConfig</strong> വിവരങ്ങൾ താഴെ നൽകുക.</li>
                     </ol>
                 </div>
@@ -748,6 +749,11 @@
 
             if (window.lucide) lucide.createIcons();
         }
+
+        window.logoutAdmin = function() {
+            sessionStorage.clear();
+            window.location.href = 'admin.html';
+        };
 
         window.deleteArticle = async function(id) {
             if (!confirm("Are you sure you want to delete this article from the website?")) return;

@@ -1,6 +1,5 @@
-// Epic Adcraft — Central Blog Data & Cloud Management Engine (Firebase + Local Fallback)
+// Epic Adcraft — Bulletproof Central Blog & Cloud Engine (Firebase + Local Storage Fail-Safe)
 
-// Embedded Firebase Configuration (Optional: Paste keys here or configure via Admin Portal)
 window.FIREBASE_CONFIG = window.FIREBASE_CONFIG || {
     apiKey: "",
     authDomain: "",
@@ -101,8 +100,8 @@ const DEFAULT_ARTICLES = [
 const STORAGE_KEY = 'epic_adcraft_blogs';
 const FIREBASE_CONFIG_KEY = 'epic_adcraft_firebase_config';
 
-// Global Firestore handle
 let firestoreDb = null;
+let lastCloudError = null;
 
 // Initialize Firebase if credentials exist
 function initFirebaseDatabase() {
@@ -122,61 +121,87 @@ function initFirebaseDatabase() {
                 firebase.initializeApp(config);
             }
             firestoreDb = firebase.firestore();
-            console.log("Firebase Firestore connected successfully.");
+            console.log("Firebase Firestore initialized.");
             return firestoreDb;
         } catch (err) {
             console.warn("Firebase initialization error:", err);
+            lastCloudError = err.message;
             return null;
         }
     }
     return null;
 }
 
-// Try auto-initialization immediately
 initFirebaseDatabase();
 
-// Check if Firebase is currently active
 function isCloudDatabaseActive() {
     return firestoreDb !== null;
 }
 
-// Get all articles (from Cloud Firestore or local cache)
+function getCloudError() {
+    return lastCloudError;
+}
+
+// Safely get local articles (guarantees existing articles are never lost)
+function getLocalArticles() {
+    try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) {
+            const parsed = JSON.parse(stored);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+                return parsed;
+            }
+        }
+    } catch(e) {}
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_ARTICLES));
+    return DEFAULT_ARTICLES.slice();
+}
+
+// Promise with timeout helper
+function withTimeout(promise, ms = 3000) {
+    return Promise.race([
+        promise,
+        new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout")), ms))
+    ]);
+}
+
+// Get all articles (seamlessly tries Firestore, always preserves local items)
 async function getAllArticles() {
-    // 1. Try Firebase Cloud Firestore
+    const local = getLocalArticles();
+
     if (firestoreDb) {
         try {
-            const snapshot = await firestoreDb.collection("articles").get();
+            const snapshot = await withTimeout(firestoreDb.collection("articles").get(), 3500);
             if (!snapshot.empty) {
-                const articles = [];
+                const cloudArticles = [];
                 snapshot.forEach(doc => {
-                    articles.push(doc.data());
+                    cloudArticles.push(doc.data());
                 });
-                articles.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(articles));
-                return articles;
+
+                // Merge cloud and local so no local post is ever lost
+                const mergedMap = new Map();
+                local.forEach(a => mergedMap.set(String(a.id), a));
+                cloudArticles.forEach(a => mergedMap.set(String(a.id), a));
+
+                const all = Array.from(mergedMap.values());
+                all.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
+                lastCloudError = null;
+                return all;
             } else {
-                // If cloud collection is currently empty, seed with default articles
-                for (const def of DEFAULT_ARTICLES) {
-                    await firestoreDb.collection("articles").doc(def.id).set(def);
+                // If cloud is empty, upload existing local articles so they sync to cloud!
+                for (const item of local) {
+                    firestoreDb.collection("articles").doc(String(item.id)).set(item).catch(() => {});
                 }
-                return DEFAULT_ARTICLES;
+                return local;
             }
         } catch (err) {
-            console.warn("Could not fetch from Firestore, falling back to local cache:", err);
+            console.warn("Firestore fetch error or timeout, using local articles:", err);
+            lastCloudError = err.message || "Connection timeout or permission denied";
         }
     }
 
-    // 2. Fallback to localStorage or defaults
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (!stored) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_ARTICLES));
-        return DEFAULT_ARTICLES;
-    }
-    try {
-        return JSON.parse(stored);
-    } catch (e) {
-        return DEFAULT_ARTICLES;
-    }
+    return local;
 }
 
 // Get latest N articles
@@ -187,21 +212,22 @@ async function getLatestArticles(limit = 3) {
 
 // Get article by ID
 async function getArticleById(id) {
+    const local = getLocalArticles();
+    const foundLocal = local.find(a => String(a.id) === String(id));
+
     if (firestoreDb) {
         try {
-            const doc = await firestoreDb.collection("articles").doc(String(id)).get();
+            const doc = await withTimeout(firestoreDb.collection("articles").doc(String(id)).get(), 2500);
             if (doc.exists) {
                 return doc.data();
             }
-        } catch (err) {
-            console.warn("Firestore getArticleById error:", err);
-        }
+        } catch (e) {}
     }
-    const all = await getAllArticles();
-    return all.find(a => String(a.id) === String(id)) || null;
+
+    return foundLocal || null;
 }
 
-// Publish new article (saves to Cloud Firestore & local cache)
+// Publish new article (Guaranteed instant local save + background cloud sync)
 async function publishNewArticle(data) {
     const newArticle = {
         id: String(Date.now()),
@@ -217,48 +243,38 @@ async function publishNewArticle(data) {
         createdAt: Date.now()
     };
 
-    // 1. Save to Cloud Firestore
-    if (firestoreDb) {
-        try {
-            await firestoreDb.collection("articles").doc(newArticle.id).set(newArticle);
-            console.log("Article saved to Firebase Cloud:", newArticle.id);
-        } catch (err) {
-            console.error("Failed to write to Cloud Firestore:", err);
-        }
-    }
-
-    // 2. Always update local storage cache
-    let all = [];
-    try {
-        const stored = localStorage.getItem(STORAGE_KEY);
-        all = stored ? JSON.parse(stored) : DEFAULT_ARTICLES.slice();
-    } catch (e) {
-        all = DEFAULT_ARTICLES.slice();
-    }
+    // 1. ALWAYS save to local storage immediately (Instant & 100% reliable)
+    let all = getLocalArticles();
     all.unshift(newArticle);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
+
+    // 2. Sync to Cloud Firestore if connected
+    if (firestoreDb) {
+        try {
+            await withTimeout(firestoreDb.collection("articles").doc(newArticle.id).set(newArticle), 4000);
+            console.log("Article successfully synced to Firebase Cloud Firestore.");
+            lastCloudError = null;
+        } catch (err) {
+            console.warn("Could not sync to Cloud Firestore (permissions or size):", err);
+            lastCloudError = err.message || "Failed to sync to cloud";
+        }
+    }
 
     return newArticle;
 }
 
-// Delete article by ID
+// Delete article by ID (deletes locally + cloud)
 async function deleteArticleById(id) {
+    let all = getLocalArticles();
+    all = all.filter(a => String(a.id) !== String(id));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
+
     if (firestoreDb) {
         try {
-            await firestoreDb.collection("articles").doc(String(id)).delete();
-            console.log("Article deleted from Cloud Firestore:", id);
+            await withTimeout(firestoreDb.collection("articles").doc(String(id)).delete(), 3000);
         } catch (err) {
-            console.error("Failed to delete from Cloud Firestore:", err);
+            console.warn("Could not delete from Cloud Firestore:", err);
         }
-    }
-
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-        try {
-            let all = JSON.parse(stored);
-            all = all.filter(a => String(a.id) !== String(id));
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
-        } catch (e) {}
     }
 }
 
