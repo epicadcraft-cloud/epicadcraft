@@ -9,6 +9,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Firebase Cloud SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- Tailwind CSS -->
@@ -47,7 +50,7 @@
     <header class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-studio-base/80 border-b border-studio-border">
         <div class="max-w-7xl mx-auto px-6 sm:px-10 h-24 sm:h-28 flex items-center justify-between">
             <a href="index.html" class="flex items-center gap-4 group py-2">
-                <img src="logo.png" alt="Epic Adcraft" class="h-16 sm:h-20 w-auto object-contain transition-transform duration-300 group-hover:scale-105">
+                <img src="logo.png?v=3" alt="Epic Adcraft" class="h-10 sm:h-12 w-auto max-w-[180px] sm:max-w-[220px] object-contain transition-transform duration-300 group-hover:scale-105">
                 <span class="hidden sm:inline-block text-[11px] uppercase tracking-widest text-studio-muted pl-3 border-l border-studio-border font-medium">Journal</span>
             </a>
 
@@ -196,10 +199,10 @@
             initFilters();
         });
 
-        function renderArticles(category = 'all', searchQuery = '') {
+        async function renderArticles(category = 'all', searchQuery = '') {
             const container = document.getElementById('articlesContainer');
             const empty = document.getElementById('emptyState');
-            let articles = getAllArticles();
+            let articles = await getAllArticles();
 
             if (category !== 'all') {
                 articles = articles.filter(a => a.category.toLowerCase() === category.toLowerCase());
@@ -302,12 +305,12 @@
                 });
             }
 
-            form.addEventListener('submit', (e) => {
+            form.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const contentRaw = document.getElementById('postContent').value;
                 const formattedContent = contentRaw.split('\n\n').map(p => `<p class="mb-4">${p.trim()}</p>`).join('');
 
-                publishNewArticle({
+                await publishNewArticle({
                     title: document.getElementById('postTitle').value,
                     category: document.getElementById('postCategory').value,
                     readTime: document.getElementById('postReadTime').value,
@@ -318,7 +321,7 @@
 
                 form.reset();
                 closeModal();
-                renderArticles();
+                await renderArticles();
             });
         }
     </script>

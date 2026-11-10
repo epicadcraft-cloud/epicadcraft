@@ -1,4 +1,14 @@
-// Epic Adcraft — Central Blog Data & Management Engine
+// Epic Adcraft — Central Blog Data & Cloud Management Engine (Firebase + Local Fallback)
+
+// Embedded Firebase Configuration (Optional: Paste keys here or configure via Admin Portal)
+window.FIREBASE_CONFIG = window.FIREBASE_CONFIG || {
+    apiKey: "",
+    authDomain: "",
+    projectId: "",
+    storageBucket: "",
+    messagingSenderId: "",
+    appId: ""
+};
 
 const DEFAULT_ARTICLES = [
     {
@@ -27,7 +37,8 @@ const DEFAULT_ARTICLES = [
 
             <h3 class="font-serif text-2xl text-white mt-8 mb-3">3. Craft in Every Micro-Interaction</h3>
             <p>True luxury and prestige are felt in the details—how intuitive your digital checkout is, the weight of your packaging paper, and the tone of voice in your customer emails. At Epic Adcraft, our mission is to ensure every micro-moment speaks with absolute authority.</p>
-        `
+        `,
+        createdAt: 1729750000000
     },
     {
         id: "2",
@@ -56,7 +67,8 @@ const DEFAULT_ARTICLES = [
                 <li><strong class="text-white">Proof Demonstration:</strong> Verifiable social proof, client case outcomes, and clear methodology.</li>
                 <li><strong class="text-white">Frictionless Action:</strong> Direct WhatsApp or short-form inquiry with instant automated follow-up.</li>
             </ul>
-        `
+        `,
+        createdAt: 1726650000000
     },
     {
         id: "3",
@@ -81,14 +93,80 @@ const DEFAULT_ARTICLES = [
 
             <h3 class="font-serif text-2xl text-white mt-8 mb-3">Elevating Perception Over Competitors</h3>
             <p>When your brand deploys world-class visual animation, your market positioning immediately shifts. You stop competing with local low-cost alternatives and enter the psychological realm of international category leaders.</p>
-        `
+        `,
+        createdAt: 1725000000000
     }
 ];
 
 const STORAGE_KEY = 'epic_adcraft_blogs';
+const FIREBASE_CONFIG_KEY = 'epic_adcraft_firebase_config';
 
-// Get all articles (from storage or defaults)
-function getAllArticles() {
+// Global Firestore handle
+let firestoreDb = null;
+
+// Initialize Firebase if credentials exist
+function initFirebaseDatabase() {
+    if (typeof firebase === 'undefined') return null;
+
+    let config = window.FIREBASE_CONFIG;
+    try {
+        const saved = localStorage.getItem(FIREBASE_CONFIG_KEY);
+        if (saved) {
+            config = JSON.parse(saved);
+        }
+    } catch (e) {}
+
+    if (config && config.projectId && config.apiKey) {
+        try {
+            if (!firebase.apps.length) {
+                firebase.initializeApp(config);
+            }
+            firestoreDb = firebase.firestore();
+            console.log("Firebase Firestore connected successfully.");
+            return firestoreDb;
+        } catch (err) {
+            console.warn("Firebase initialization error:", err);
+            return null;
+        }
+    }
+    return null;
+}
+
+// Try auto-initialization immediately
+initFirebaseDatabase();
+
+// Check if Firebase is currently active
+function isCloudDatabaseActive() {
+    return firestoreDb !== null;
+}
+
+// Get all articles (from Cloud Firestore or local cache)
+async function getAllArticles() {
+    // 1. Try Firebase Cloud Firestore
+    if (firestoreDb) {
+        try {
+            const snapshot = await firestoreDb.collection("articles").get();
+            if (!snapshot.empty) {
+                const articles = [];
+                snapshot.forEach(doc => {
+                    articles.push(doc.data());
+                });
+                articles.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(articles));
+                return articles;
+            } else {
+                // If cloud collection is currently empty, seed with default articles
+                for (const def of DEFAULT_ARTICLES) {
+                    await firestoreDb.collection("articles").doc(def.id).set(def);
+                }
+                return DEFAULT_ARTICLES;
+            }
+        } catch (err) {
+            console.warn("Could not fetch from Firestore, falling back to local cache:", err);
+        }
+    }
+
+    // 2. Fallback to localStorage or defaults
     const stored = localStorage.getItem(STORAGE_KEY);
     if (!stored) {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_ARTICLES));
@@ -101,21 +179,30 @@ function getAllArticles() {
     }
 }
 
-// Get the latest N articles (for the homepage)
-function getLatestArticles(limit = 3) {
-    const all = getAllArticles();
+// Get latest N articles
+async function getLatestArticles(limit = 3) {
+    const all = await getAllArticles();
     return all.slice(0, limit);
 }
 
 // Get article by ID
-function getArticleById(id) {
-    const all = getAllArticles();
+async function getArticleById(id) {
+    if (firestoreDb) {
+        try {
+            const doc = await firestoreDb.collection("articles").doc(String(id)).get();
+            if (doc.exists) {
+                return doc.data();
+            }
+        } catch (err) {
+            console.warn("Firestore getArticleById error:", err);
+        }
+    }
+    const all = await getAllArticles();
     return all.find(a => String(a.id) === String(id)) || null;
 }
 
-// Add a new blog post
-function publishNewArticle(data) {
-    const all = getAllArticles();
+// Publish new article (saves to Cloud Firestore & local cache)
+async function publishNewArticle(data) {
     const newArticle = {
         id: String(Date.now()),
         title: data.title || "Untitled Article",
@@ -126,21 +213,62 @@ function publishNewArticle(data) {
         authorRole: data.authorRole || "Founder & CEO, Epic Adcraft",
         excerpt: data.excerpt || "",
         image: data.image || "",
-        content: data.content || ""
+        content: data.content || "",
+        createdAt: Date.now()
     };
 
-    all.unshift(newArticle); // Prepend to top so it's the latest
+    // 1. Save to Cloud Firestore
+    if (firestoreDb) {
+        try {
+            await firestoreDb.collection("articles").doc(newArticle.id).set(newArticle);
+            console.log("Article saved to Firebase Cloud:", newArticle.id);
+        } catch (err) {
+            console.error("Failed to write to Cloud Firestore:", err);
+        }
+    }
+
+    // 2. Always update local storage cache
+    let all = [];
+    try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        all = stored ? JSON.parse(stored) : DEFAULT_ARTICLES.slice();
+    } catch (e) {
+        all = DEFAULT_ARTICLES.slice();
+    }
+    all.unshift(newArticle);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
+
     return newArticle;
+}
+
+// Delete article by ID
+async function deleteArticleById(id) {
+    if (firestoreDb) {
+        try {
+            await firestoreDb.collection("articles").doc(String(id)).delete();
+            console.log("Article deleted from Cloud Firestore:", id);
+        } catch (err) {
+            console.error("Failed to delete from Cloud Firestore:", err);
+        }
+    }
+
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+        try {
+            let all = JSON.parse(stored);
+            all = all.filter(a => String(a.id) !== String(id));
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
+        } catch (e) {}
+    }
 }
 
 // Render an individual blog card HTML
 function renderBlogCardHTML(article) {
     return `
-        <article class="p-8 rounded-2xl bg-studio-panel border border-studio-border hover:border-studio-purple/40 hover:-translate-y-1 transition-all flex flex-col justify-between group overflow-hidden">
+        <article class="p-8 rounded-2xl bg-studio-card border border-studio-border hover:border-studio-primary/40 hover:-translate-y-1 transition-all flex flex-col justify-between group overflow-hidden">
             <div>
                 ${article.image ? `
-                    <div class="w-full h-48 rounded-xl overflow-hidden mb-6 border border-studio-border relative bg-studio-base">
+                    <div class="w-full h-48 rounded-xl overflow-hidden mb-6 border border-studio-border relative bg-studio-surface">
                         <img src="${article.image}" alt="${article.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     </div>
                 ` : ''}
@@ -149,7 +277,7 @@ function renderBlogCardHTML(article) {
                     <span>${article.date}</span>
                 </div>
                 <a href="article.html?id=${article.id}" class="block">
-                    <h3 class="font-serif text-2xl text-white group-hover:text-studio-accent transition-colors leading-snug mb-3">
+                    <h3 class="font-display text-2xl text-white group-hover:text-studio-primary transition-colors leading-snug mb-3">
                         ${article.title}
                     </h3>
                 </a>
@@ -159,7 +287,7 @@ function renderBlogCardHTML(article) {
             </div>
             <div class="pt-6 border-t border-studio-border flex items-center justify-between text-xs text-studio-muted">
                 <span class="font-medium text-white">${article.author}</span>
-                <a href="article.html?id=${article.id}" class="flex items-center gap-1.5 text-studio-sand hover:text-white transition-colors group-hover:translate-x-1 transition-transform">
+                <a href="article.html?id=${article.id}" class="flex items-center gap-1.5 text-studio-light hover:text-white transition-colors group-hover:translate-x-1 transition-transform">
                     <span>Read Article</span>
                     <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                 </a>

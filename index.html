@@ -9,6 +9,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Firebase Cloud SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- Tailwind CSS -->
@@ -52,7 +55,7 @@
         <div class="max-w-7xl mx-auto px-6 sm:px-10 h-24 sm:h-28 flex items-center justify-between">
             <!-- Official Brand Logo -->
             <a href="#hero" class="flex items-center group py-2">
-                <img src="logo.png" alt="Epic Adcraft - Strategic Creative Solutions" class="h-11 sm:h-12 md:h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-105">
+                <img src="logo.png?v=3" alt="Epic Adcraft - Strategic Creative Solutions" class="h-10 sm:h-12 w-auto max-w-[180px] sm:max-w-[220px] object-contain transition-transform duration-300 group-hover:scale-105">
             </a>
 
             <!-- Desktop Navigation Links -->
@@ -591,9 +594,7 @@
     <footer class="py-14 border-t border-studio-border bg-studio-bg text-studio-muted text-xs">
         <div class="max-w-7xl mx-auto px-6 sm:px-10 flex flex-col md:flex-row items-center justify-between gap-8">
             <div class="flex items-center gap-4">
-                <div class="h-12 sm:h-16 w-36 sm:w-48 overflow-hidden flex items-center justify-center">
-                    <img src="logo.png" alt="Epic Adcraft" class="w-full h-auto scale-[2.4] object-contain">
-                </div>
+                <img src="logo.png?v=3" alt="Epic Adcraft" class="h-9 sm:h-10 w-auto max-w-[160px] object-contain">
                 <span class="text-studio-muted text-xs border-l border-studio-border pl-4">© 2026 Epic Adcraft. All rights reserved.</span>
             </div>
             <div class="flex items-center gap-8 text-xs uppercase tracking-widest font-semibold">

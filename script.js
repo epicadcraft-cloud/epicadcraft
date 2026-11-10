@@ -11,14 +11,18 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Render the 3 latest articles on Home
-function initHomeArticles() {
+async function initHomeArticles() {
     const container = document.getElementById('homeArticlesContainer');
     if (!container || typeof getLatestArticles !== 'function') return;
 
-    const latest = getLatestArticles(3);
-    container.innerHTML = latest.map(article => renderBlogCardHTML(article)).join('');
-    if (window.lucide) {
-        lucide.createIcons();
+    try {
+        const latest = await getLatestArticles(3);
+        container.innerHTML = latest.map(article => renderBlogCardHTML(article)).join('');
+        if (window.lucide) {
+            lucide.createIcons();
+        }
+    } catch (e) {
+        console.error("Error loading home articles:", e);
     }
 }
 
