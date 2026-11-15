@@ -173,7 +173,7 @@ function withTimeout(promise, ms = 3000) {
     ]);
 }
 
-// Get all articles (seamlessly tries Firestore, always preserves local items)
+// Get all articles (Cloud Firestore is authoritative source of truth)
 async function getAllArticles() {
     const local = getLocalArticles();
 
@@ -183,25 +183,26 @@ async function getAllArticles() {
             if (!snapshot.empty) {
                 const cloudArticles = [];
                 snapshot.forEach(doc => {
-                    cloudArticles.push(doc.data());
+                    const data = doc.data();
+                    if (data && (data.title || data.content)) {
+                        if (!data.id) data.id = doc.id;
+                        cloudArticles.push(data);
+                    }
                 });
 
-                // Merge cloud and local so no local post is ever lost
-                const mergedMap = new Map();
-                local.forEach(a => mergedMap.set(String(a.id), a));
-                cloudArticles.forEach(a => mergedMap.set(String(a.id), a));
-
-                const all = Array.from(mergedMap.values());
-                all.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
-                lastCloudError = null;
-                return all;
+                if (cloudArticles.length > 0) {
+                    cloudArticles.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+                    // Cloud is authoritative: syncs local storage so deleted articles vanish across all devices!
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(cloudArticles));
+                    lastCloudError = null;
+                    return cloudArticles;
+                }
             } else {
-                // If cloud is empty, upload existing local articles so they sync to cloud!
-                for (const item of local) {
+                // If cloud is empty, upload default articles so they seed to cloud
+                for (const item of DEFAULT_ARTICLES) {
                     firestoreDb.collection("articles").doc(String(item.id)).set(item).catch(() => {});
                 }
-                return local;
+                return DEFAULT_ARTICLES.slice();
             }
         } catch (err) {
             console.warn("Firestore fetch error or timeout, using local articles:", err);
@@ -271,7 +272,7 @@ async function publishNewArticle(data) {
     return newArticle;
 }
 
-// Delete article by ID (deletes locally + cloud)
+// Delete article by ID (deletes locally + cloud thoroughly)
 async function deleteArticleById(id) {
     let all = getLocalArticles();
     all = all.filter(a => String(a.id) !== String(id));
@@ -279,7 +280,14 @@ async function deleteArticleById(id) {
 
     if (firestoreDb) {
         try {
-            await withTimeout(firestoreDb.collection("articles").doc(String(id)).delete(), 3000);
+            // Delete directly by document ID
+            await withTimeout(firestoreDb.collection("articles").doc(String(id)).delete(), 3500).catch(() => {});
+            // Also search and delete any document with this id field
+            const snapshot = await withTimeout(firestoreDb.collection("articles").where("id", "==", String(id)).get(), 3500);
+            const batch = firestoreDb.batch();
+            snapshot.forEach(doc => batch.delete(doc.ref));
+            await batch.commit();
+            console.log("Article permanently deleted from Cloud Firestore:", id);
         } catch (err) {
             console.warn("Could not delete from Cloud Firestore:", err);
         }
