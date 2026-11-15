@@ -173,16 +173,40 @@ function withTimeout(promise, ms = 3000) {
     ]);
 }
 
+let isSeeding = false;
+async function ensureDefaultArticlesSeeded() {
+    if (!firestoreDb || isSeeding) return;
+    try {
+        const marker = await withTimeout(firestoreDb.collection("articles").doc("_meta_seeded").get(), 3000);
+        if (!marker.exists) {
+            isSeeding = true;
+            const batch = firestoreDb.batch();
+            for (const art of DEFAULT_ARTICLES) {
+                const ref = firestoreDb.collection("articles").doc(String(art.id));
+                batch.set(ref, art);
+            }
+            batch.set(firestoreDb.collection("articles").doc("_meta_seeded"), { seeded: true, at: Date.now() });
+            await batch.commit();
+            console.log("3 default articles seeded to Firestore.");
+        }
+    } catch (e) {
+        console.warn("Seeding check error:", e);
+    }
+}
+
 // Get all articles (Cloud Firestore is authoritative source of truth)
 async function getAllArticles() {
     const local = getLocalArticles();
 
     if (firestoreDb) {
         try {
+            await ensureDefaultArticlesSeeded();
+
             const snapshot = await withTimeout(firestoreDb.collection("articles").get(), 3500);
             if (!snapshot.empty) {
                 const cloudArticles = [];
                 snapshot.forEach(doc => {
+                    if (doc.id === "_meta_seeded") return;
                     const data = doc.data();
                     if (data && (data.title || data.content)) {
                         if (!data.id) data.id = doc.id;
@@ -197,12 +221,6 @@ async function getAllArticles() {
                     lastCloudError = null;
                     return cloudArticles;
                 }
-            } else {
-                // If cloud is empty, upload default articles so they seed to cloud
-                for (const item of DEFAULT_ARTICLES) {
-                    firestoreDb.collection("articles").doc(String(item.id)).set(item).catch(() => {});
-                }
-                return DEFAULT_ARTICLES.slice();
             }
         } catch (err) {
             console.warn("Firestore fetch error or timeout, using local articles:", err);
