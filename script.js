@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
         lucide.createIcons();
     }
     initMobileMenu();
+    initSmoothHashlessScroll();
     initContactForm();
     initArticleReader();
 });
@@ -39,6 +40,42 @@ function initMobileMenu() {
     menu.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', () => {
             menu.classList.add('hidden');
+        });
+    });
+}
+
+// Smooth, Hash-Free Navigation Scrolling
+function initSmoothHashlessScroll() {
+    const navLinks = document.querySelectorAll('a[href^="#"]');
+    const navbar = document.getElementById('navbar');
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            const hash = link.getAttribute('href');
+            if (!hash || hash === '#' || hash.length <= 1) return;
+
+            const targetSection = document.querySelector(hash);
+            if (!targetSection) return;
+
+            // 1. Prevent default URL hash appending
+            e.preventDefault();
+
+            // 2. Account for fixed navbar offset so content isn't covered
+            const navHeight = navbar ? navbar.offsetHeight : 80;
+            const elementPosition = targetSection.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - navHeight;
+
+            // 3. Smooth scroll to calculated position
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+
+            // 4. Auto-close mobile drawer if active
+            const mobileMenu = document.getElementById('mobileMenu');
+            if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.add('hidden');
+            }
         });
     });
 }
